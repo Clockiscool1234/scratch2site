@@ -1,0 +1,71 @@
+var _____WB$wombat$assign$function_____ = function(name) {return (self._wb_wombat && self._wb_wombat.local_init && self._wb_wombat.local_init(name)) || self[name]; };
+if (!self.__WB_pmw) { self.__WB_pmw = function(obj) { this.__WB_source = obj; return this; } }
+{
+  let window = _____WB$wombat$assign$function_____("window");
+  let self = _____WB$wombat$assign$function_____("self");
+  let document = _____WB$wombat$assign$function_____("document");
+  let location = _____WB$wombat$assign$function_____("location");
+  let top = _____WB$wombat$assign$function_____("top");
+  let parent = _____WB$wombat$assign$function_____("parent");
+  let frames = _____WB$wombat$assign$function_____("frames");
+  let opener = _____WB$wombat$assign$function_____("opener");
+
+var accountNavReady;
+var dispatchAccountNavReady;
+
+if(document.createEvent) { // non-IE
+    accountNavReady = document.createEvent('Event');
+    accountNavReady.initEvent('accountnavready', true, true);
+    dispatchAccountNavReady = function () {
+        document.dispatchEvent(accountNavReady);
+    }
+} else if (document.createEventObject) { // IE
+    dispatchAccountNavReady = function () {
+        document.documentElement.accountnavready++;
+    }
+}
+
+function setAccountNav(context){
+    var template = _.template($('#template-account-nav-logged-out').html());
+    if(context['username']){
+        // User is logged in
+        template = _.template($('#template-account-nav-logged-in').html());
+        $(function(){
+            var create = $('#project-create');
+            create.attr('href', create.attr('href').split('?')[0]);
+        });
+    }
+    $('.account-nav').replaceWith(template(context));
+
+    $(dispatchAccountNavReady);
+}
+$.ajax({
+    url: '/fragment/account-nav.json',
+}).done(function (data_json) {
+    accountNavContext = JSON.parse(data_json);
+    setAccountNav(accountNavContext);
+});
+
+
+}
+/*
+     FILE ARCHIVED ON 15:43:58 Feb 12, 2015 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 00:34:22 Feb 17, 2023.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  captures_list: 290.057
+  exclusion.robots: 0.067
+  exclusion.robots.policy: 0.061
+  cdx.remote: 0.052
+  esindex: 0.007
+  LoadShardBlock: 254.045 (3)
+  PetaboxLoader3.datanode: 281.666 (5)
+  CDXLines.iter: 14.213 (3)
+  load_resource: 133.453 (2)
+  PetaboxLoader3.resolve: 97.767 (2)
+*/
